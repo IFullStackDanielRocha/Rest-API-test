@@ -34,15 +34,54 @@
             return $this->respond($data,200);
          }
 
-        public function index(){
-            $data = [
+
+         public function search($info){
+
+            $searchInfo = '%'.$info.'%';
+            $data =[
                 'message' => 'success',
-                'customers_data' => $this->customerModel->findAll(),
-                
+                'customer_by_name' => $this->customerModel->like('name', $searchInfo)->findAll(),
             ];
 
-
             return $this->respond($data,200);
+
+        }
+        public function index(){
+            $page = $this->request->getVar('page')??1;
+            $quantity = $this->request->getVar('quatity')??10;
+
+            $offset = ($page - 1) * $quantity;
+
+            $pages = $this->customerModel->orderBy('id', 'DESC')->paginate($quantity, 'default' , $offset);
+            $elements = $this->customerModel->countAllResults();
+
+            $number = ($page <=0 )? null : $page;
+            $totalPages = ($quantity <= 0) ? null : ceil($elements / $quantity);
+            $firstPage = ($number === 1);
+            $lastPage = ($number === $totalPages);
+
+            $response = [
+
+                'data' =>  [
+                'message' => 'success',
+                'customer_data' => $pages,
+                
+            ],
+                'pagination' =>[
+                    'page' => $page,
+                    'quantity' => $quantity,
+                    'elements' => $elements,
+                    'number' => $number,
+                    'firstPage' => $firstPage,
+                    'lastPage' => $lastPage,
+                ]
+            ];
+
+            return $this->respond($response,200);
+
+
+
+
         }
         public function create(){
         

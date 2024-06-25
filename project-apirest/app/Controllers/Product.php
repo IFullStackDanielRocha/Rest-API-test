@@ -19,7 +19,22 @@
             $data = $this->productModel->find($id);
             return ($data === null) ? true : false;
         }
-         public function getById($id){
+
+        public function search($info){
+
+            $searchInfo = '%'.$info.'%';
+            $data =[
+                'message' => 'success',
+                'product_by_name' => $this->productModel->like('name', $searchInfo)->findAll(),
+                'product_by_description' => $this->productModel->like('description', $searchInfo)->findAll(),
+               
+            ];
+
+            return $this->respond($data,200);
+
+        }
+
+        public function getById($id){
             $data =[
                 'message' => 'success',
                 'product_by_id' => $this->productModel->find($id),
@@ -32,14 +47,40 @@
             return $this->respond($data,200);
          }
         public function index(){
-            $data = [
+          
+
+            $page = $this->request->getVar('page')??1;
+            $quantity = $this->request->getVar('quatity')??10;
+
+            $offset = ($page - 1) * $quantity;
+
+            $pages = $this->productModel->orderBy('id', 'DESC')->paginate($quantity, 'default' , $offset);
+            $elements = $this->productModel->countAllResults();
+
+            $number = ($page <=0 )? null : $page;
+            $totalPages = ($quantity <= 0) ? null : ceil($elements / $quantity);
+            $firstPage = ($number === 1);
+            $lastPage = ($number === $totalPages);
+
+            $response = [
+
+                'data' =>  [
                 'message' => 'success',
-                'products_data' => $this->productModel->findAll(),
+                'products_data' => $pages,
                 
+            ],
+                'pagination' =>[
+                    'page' => $page,
+                    'quantity' => $quantity,
+                    'elements' => $elements,
+                    'number' => $number,
+                    'firstPage' => $firstPage,
+                    'lastPage' => $lastPage,
+                ]
             ];
 
+            return $this->respond($response,200);
 
-            return $this->respond($data,200);
         }
         public function create(){
 

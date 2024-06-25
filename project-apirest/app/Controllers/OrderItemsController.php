@@ -35,14 +35,37 @@
          }
 
         public function index(){
-            $data = [
+            $page = $this->request->getVar('page')??1;
+            $quantity = $this->request->getVar('quatity')??10;
+
+            $offset = ($page - 1) * $quantity;
+
+            $pages = $this->orderItemsModel->orderBy('id', 'DESC')->paginate($quantity, 'default' , $offset);
+            $elements = $this->orderItemsModel->countAllResults();
+
+            $number = ($page <=0 )? null : $page;
+            $totalPages = ($quantity <= 0) ? null : ceil($elements / $quantity);
+            $firstPage = ($number === 1);
+            $lastPage = ($number === $totalPages);
+
+            $response = [
+
+                'data' => [
                 'message' => 'success',
-                'Order_Items_data' => $this->orderItemsModel->findAll(),
+                'order_items_data' => $pages,
                 
+            ],
+                'pagination' =>[
+                    'page' => $page,
+                    'quantity' => $quantity,
+                    'elements' => $elements,
+                    'number' => $number,
+                    'firstPage' => $firstPage,
+                    'lastPage' => $lastPage,
+                ]
             ];
 
-
-            return $this->respond($data,200);
+            return $this->respond($response,200);
         }
         public function create(){
         

@@ -63,3 +63,10 @@ $routes->delete('items/delete/(:num)', 'OrderItemsController::del/$1',['filter' 
 
 $routes->post('admin/', 'SuperAdminController::index');
 $routes->post('admin/register', 'SuperAdminController::register');
+
+
+
+// Search
+
+$routes->get('product/read/(:any)' , 'Product::search/$1');
+$routes->get('customer/read/(:any)', 'CustomerController::search/$1');
