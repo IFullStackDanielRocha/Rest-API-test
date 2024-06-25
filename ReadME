@@ -5,6 +5,98 @@
 --Disponibilizado insert de cliente e produtos para melhor experiencia ao testar customerID de 1 - 5 productId 1-200
 --- JWT Authorization
 --- Pasta DATABASE arquivos SQL
---- PAGINATION Filter
+--- Paginação e filtros de pesquisa
+--- Token de authentication necessário para as rotas Create, Update, Delete.
 
---- Token de authentication para as rotas Create, Update, Delete.
+Rotas:
+
+Login:
+localhost:8080/admin
+{
+	"email": "admin@admin.com",
+	"password": "admin"
+}
+--------------------------------#
+Register:
+localhost:8080/admin/register
+{
+	"user": "admin",
+	"email": "admin@admin.com",
+	"password": "admin",
+	"isActive": 1
+}
+--------------------------------#
+localhost:8080/customer/create
+{
+			"name": "Santana Santos",
+			"email": "anasantos@example.com",
+			"cpf": "351.321.321-32"
+}
+--------------------------------#
+localhost:8080/product/create
+{
+			"name": "TV TCL | FHD 32 polegadas ",
+			"description": "Smart TV 32 Full HD LED TCL 32S5400A Android - Wi-Fi Bluetooth Google Assistente 2 HDMI 1 USB",
+			"price": "1015.55"
+}
+-------------------------------#
+localhost:8080/order/create
+{
+			"customerId": 5,
+			"total": 23560.00,
+			"order_date":"2024-06-24 14:57:32",
+			"status": "cancelado"
+}
+-------------------------------#
+localhost:8080/items/create
+{
+			"orderId": 2,
+			"productId": 2,
+			"quantity": 2,
+		  "unit_price": 932.97
+}
+
+-------------------------------#
+localhost:8080/customer/update/(informe id)
+{
+			"name": "Ana Santos",
+			"email": "ana.santos@example.com",
+			"cpf": "32132132132"
+}
+
+localhost:8080/product/update/(informe id)
+{
+			"name": "TV CCE 4K ",
+			"description": "TV CCE  4K, 42 Polegadas  ",
+			"price": "5595.23"
+}
+localhost:8080/items/update/(informe id)
+localhost:8080/order/update/(informe id)
+
+-------------------------------#
+
+
+Delete
+localhost:8080/product/delete/(informe id)
+localhost:8080/items/delete/(informe id)
+localhost:8080/order/delete/(informe id)
+localhost:8080/customer/delete/(informe id)
+
+
+
+Search
+localhost:8080/product/read/(informe o que busca)
+localhost:8080/customer/read/(informe o que busca)
+
+
+List
+localhost:8080/products/read/
+localhost:8080/items/read
+localhost:8080/orders/read
+localhost:8080/customers/read/
+
+
+localhost:8080/products/read/(informe id)
+localhost:8080/items/read/(informe id)
+localhost:8080/order/read/(informe id)
+localhost:8080/customer/read/(informe id)
