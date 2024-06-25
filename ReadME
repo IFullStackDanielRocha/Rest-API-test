@@ -100,3 +100,10 @@ localhost:8080/products/read/(informe id)
 localhost:8080/items/read/(informe id)
 localhost:8080/order/read/(informe id)
 localhost:8080/customer/read/(informe id)
+
+Para uso da paginação modelo:
+
+http://localhost:8080/products/read?page=2&quatity=10
+
+page=2 -- página
+quatity=10 -- quantidade a ser apresentada por página
