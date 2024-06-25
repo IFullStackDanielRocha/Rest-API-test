@@ -1,7 +1,10 @@
 --Para execução do programa
 
 --composer update
---Criar em python lista de 200 componentes para produtos, nomes e valores ficticios
+--Lista de 200 componentes para produtos, nomes e valores ficticios
 --Disponibilizado insert de cliente e produtos para melhor experiencia ao testar customerID de 1 - 5 productId 1-200
 
 -- Pasta DATABASE arquivos SQL
+
+--- JWT AUTH. https://www.youtube.com/watch?v=cVHRBItDZW0
+--- PAGINATION Filter
